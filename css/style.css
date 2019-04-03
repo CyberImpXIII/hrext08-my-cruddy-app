@@ -36,6 +36,14 @@ tfoot {
     color: #fff;
 }
 
+tbody{
+	text-decoration: underline;
+	color: green;
+}
+tbody.td:hover{
+	color:purple;
+}
+
 /*
 	FORM STYLING 
 	TODO: validation checking styling 

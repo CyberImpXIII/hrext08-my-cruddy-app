@@ -14,8 +14,25 @@ var updateStatusLabel = function(message) {
  //jQuery document ready initialization stuff
  ////button and form event handlers
  // logic for determining action probably needs to go in the event handler
-$(document).ready(function () {
+$(document).ready(function readyFunc() {
 	loadLocalStorage();
+
+	$('#key').on('input',function(e){
+    var key = $('#key').val();
+    console.log($('#key').val());
+    var keyExists = (localStorage.getItem(key)!==null);
+    if(keyExists){
+    	$("#all-buttons").html(`<button class='button' id='btn-update' type='button'>Update</button> 
+    		<button class='button' id='btn-delete' type='button'>Delete</button>`);
+    	readyFunc();
+    }else{
+    	if($("#btn-update")){
+    		$("#all-buttons").html(`<button class="button" id="btn-create" type="button">Create</button> 
+    		<button class='button' id='btn-delete' type='button'>Delete</button>`);
+    		readyFunc();
+    	}
+    }
+	});
 
 	$('#btn-create').on('click', function(e) {
 		var key = $('#key').val();
