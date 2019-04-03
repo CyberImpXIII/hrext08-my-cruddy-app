@@ -40,7 +40,7 @@ tbody{
 	text-decoration: underline;
 	color: green;
 }
-tbody.td:hover{
+.entry:hover{
 	color:purple;
 }
 
