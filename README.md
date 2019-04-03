@@ -15,3 +15,5 @@ Create Read Update and Delete framework using JS
 - [ ] State changing styling (hover/etc)
 - [ ] corgi gif
 - [ ] cowbell sound
+- [ ] autofill
+- [ ] variable use buttons
