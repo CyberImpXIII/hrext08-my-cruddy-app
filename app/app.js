@@ -1,8 +1,20 @@
 var loadLocalStorage = function () {
-	var keys = Object.keys(localStorage)
+	var localStorageEntries = Object.entries(localStorage)
 	var htmlString = '';
-	for (var i = 0; i < keys.length; i++) {
-		htmlString += `<tr ><td class="entry" id="${keys[i]}">${keys[i]}</td><td>` + JSON.parse(localStorage.getItem(keys[i]))[1] + '</tr></tr>';
+	var sortedStorage = [];
+	for (var i = 0; i < localStorageEntries.length; i++){
+		sortedStorage.push(JSON.parse(localStorageEntries[i][1]));
+		sortedStorage[i].unshift(localStorageEntries[i][0])
+	}
+	sortedStorage.sort(function(a,b){
+  // Turn your strings into dates, and then subtract them
+  // to get a value that is either negative, positive, or zero.
+  	return  new Date(b[2]) - new Date(a[2]);
+});
+	console.log(sortedStorage);
+	for (var i = 0; i < sortedStorage.length; i++) {
+		htmlString += '<tr ><td class="entry" id="' + sortedStorage[i][0] + '">' + localStorageEntries[i][0] + '</td><td>' 
+		+ sortedStorage[i][2] + '</tr></tr>';
 	}
 	$('tbody').html(htmlString)
 };
@@ -11,36 +23,36 @@ var updateStatusLabel = function(message) {
 	$('#statusLabel').text('Status: ' + message);
 }
 
-function buttonFunctionality(){
+function buttonAvailabilityChecker(){
+		var key = $('#key').val();
+		var keyExists = (localStorage.getItem(key)!==null);
+		if(keyExists){
+	    	$("#all-buttons").html(`<button class='button' id='btn-update' type='button'>Update</button> 
+	    		<button class='button' id='btn-delete' type='button'>Delete</button>`);
+	    }else{
+	    	if($("#btn-update")){
+	    		$("#all-buttons").html(`<button class="button" id="btn-create" type="button">Create</button> 
+	    			<button class='button' id='btn-delete' type='button'>Delete</button>`);
+	    	}
+	    }
+	}
 
+function formFunction(){
 	//detects key input and adjusts the update/create button as its needed
-		$('#key').on('input',function(e){
-    		var key = $('#key').val();
-    		var keyExists = (localStorage.getItem(key)!==null);
-    		if(keyExists){
-    			$("#all-buttons").html(`<button class='button' id='btn-update' type='button'>Update</button> 
-    			<button class='button' id='btn-delete' type='button'>Delete</button>`);
-    			buttonFunctionality();
-    		}else{
-    			if($("#btn-update")){
-    				$("#all-buttons").html(`<button class="button" id="btn-create" type="button">Create</button> 
-    				<button class='button' id='btn-delete' type='button'>Delete</button>`);
-    				buttonFunctionality();
-    			}
-    		}
-		});
+	$('#key').on('input',function(e){
+		buttonAvailabilityChecker();
+		buttonFunctionality();
+	});
 
 	//detects key input in the value field and makes sure to create an update button. This is only useful for a newly created key
 	//any other circumstances should be caught by the $(#KEY).on(input) code above^^
-		$('#value').on('input',function(e){
-    		var key = $('#key').val();
-    		var keyExists = (localStorage.getItem(key)!==null);
-    		if(keyExists){
-    			$("#all-buttons").html(`<button class='button' id='btn-update' type='button'>Update</button> 
-    			<button class='button' id='btn-delete' type='button'>Delete</button>`);
-    			buttonFunctionality();
-    		}
-    	});
+	$('#value').on('input',function(e){
+		buttonAvailabilityChecker();
+		buttonFunctionality();
+    });
+}
+
+function buttonFunctionality(){
 
 
 		$('#btn-create').on('click', function(e) {
@@ -117,6 +129,7 @@ function tableFunctionality(){
 $(document).ready(function readyFunc() {
 	loadLocalStorage();
 	buttonFunctionality();
+	formFunction();
 	tableFunctionality();
 });
 /*
