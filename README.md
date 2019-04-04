@@ -16,4 +16,6 @@ Create Read Update and Delete framework using JS
 - [ ] corgi gif
 - [ ] cowbell sound
 - [ ] autofill
-- [ ] variable use buttons
+- [x] variable use buttons
+- [ ] each key on the table can pull up the associated value entry in a different div
+- [ ] each entry is sorted by time created(or updated)
