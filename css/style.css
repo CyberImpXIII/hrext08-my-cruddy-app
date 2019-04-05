@@ -44,7 +44,7 @@ tfoot {
 
 tbody{
 	text-decoration: underline;
-	color: green;
+	color: #00ff00;
 }
 .entry:hover{
 	color:purple;
@@ -74,4 +74,8 @@ label {
 
 button.button {
 	margin-right: 20px;
+}
+
+#contentWindow{
+	color: #ff0000;
 }

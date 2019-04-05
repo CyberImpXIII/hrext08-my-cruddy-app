@@ -1,3 +1,6 @@
+var audio = new Audio('air-horn-club-sample_1.mp3');
+
+
 var loadLocalStorage = function () {
 	var localStorageEntries = Object.entries(localStorage)
 	var htmlString = '';
@@ -67,8 +70,11 @@ function buttonFunctionality(){
 				createEntry(key, JSON.stringify([value, Date(), Date()]));
 				updateStatusLabel('key created - ' + key);
 			}
-			$("#contentWindow").html("Title : " + key + "<br>" + JSON.parse(localStorage.getItem(key))[0]);
-
+			$("#contentWindow").html("<div id = 'content-window-title'>Title : " + event.target.id
+			+ "</div><div id='content-window-content'>" + JSON.parse(localStorage.getItem(event.target.id))[0] + "</div><div id='content-window-date-created'> Date Created :"
+			+ JSON.parse(localStorage.getItem(event.target.id))[2] + "<br>" + "</div><div id='content-window-date-updated'> Date Updated :"
+			+ JSON.parse(localStorage.getItem(event.target.id))[1] + "<br>");
+			audio.play();
 			loadLocalStorage();
 		});
 
@@ -88,8 +94,11 @@ function buttonFunctionality(){
 			} else {
 				updateStatusLabel('key doesn\'t exist, please use create button instead! :D');
 			}		
-			$("#contentWindow").html("Title : " + key + "<br>" + JSON.parse(localStorage.getItem(key))[0]);
-			
+			$("#contentWindow").html("<div id = 'content-window-title'>Title : " + event.target.id
+				+ "</div><div id='content-window-content'>" + JSON.parse(localStorage.getItem(event.target.id))[0] + "</div><div id='content-window-date-created'> Date Created :"
+				+ JSON.parse(localStorage.getItem(event.target.id))[2] + "<br>" + "</div><div id='content-window-date-updated'> Date Updated :"
+				+ JSON.parse(localStorage.getItem(event.target.id))[1] + "<br>");
+			audio.play();
 			loadLocalStorage();		
 		});
 
@@ -115,6 +124,7 @@ function buttonFunctionality(){
 			loadLocalStorage();
 			$('#key').val("");
 			$('#value').val("");
+			audio.play();
 			tableFunctionality();
 		});	
 };
@@ -129,8 +139,10 @@ function tableFunctionality(){
 		$('#key').val(key);
 		$('#value').val(JSON.parse(localStorage.getItem(key))[0]);
 		$("#contentWindow").html("<div id = 'content-window-title'>Title : " + event.target.id
-			+ "</div><div id='content-window-date-updated'>" + JSON.parse(localStorage.getItem(key))[0] + "</div><div id='content-window-date-created'><br>"
-			+ JSON.parse(localStorage.getItem(event.target.id))[0]);
+			+ "</div><div id='content-window-content'>" + JSON.parse(localStorage.getItem(event.target.id))[0] + "</div><div id='content-window-date-created'> Date Created :"
+			+ JSON.parse(localStorage.getItem(event.target.id))[2] + "<br>" + "</div><div id='content-window-date-updated'> Date Updated :"
+			+ JSON.parse(localStorage.getItem(event.target.id))[1] + "<br>");
+		audio.play();
 	})
 }
 
