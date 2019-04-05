@@ -13,6 +13,12 @@ state changing styling
 	FLEXBOX CONTAINER
 	guide: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 */
+
+body {
+  background-image: url("https://i.stack.imgur.com/mIrSs.jpg");
+  background-repeat: repeat;
+}
+
 .container {
 	display: flex;
 }

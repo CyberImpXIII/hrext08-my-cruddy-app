@@ -11,9 +11,8 @@ var loadLocalStorage = function () {
   // to get a value that is either negative, positive, or zero.
   	return  new Date(b[2]) - new Date(a[2]);
 });
-	console.log(sortedStorage);
 	for (var i = 0; i < sortedStorage.length; i++) {
-		htmlString += '<tr ><td class="entry" id="' + sortedStorage[i][0] + '">' + localStorageEntries[i][0] + '</td><td>' 
+		htmlString += '<tr ><td class="entry" id="' + sortedStorage[i][0] + '">' + sortedStorage[i][0] + '</td><td>' 
 		+ sortedStorage[i][2] + '</tr></tr>';
 	}
 	$('tbody').html(htmlString)
@@ -65,7 +64,7 @@ function buttonFunctionality(){
 			} else if (key === '') {
 				updateStatusLabel('invalid input!')
 			}else {
-				createEntry(key, JSON.stringify([value, Date()]));
+				createEntry(key, JSON.stringify([value, Date(), Date()]));
 				updateStatusLabel('key created - ' + key);
 			}
 			$("#contentWindow").html("Title : " + key + "<br>" + JSON.parse(localStorage.getItem(key))[0]);
@@ -114,12 +113,24 @@ function buttonFunctionality(){
     			buttonFunctionality();
     		}
 			loadLocalStorage();
+			$('#key').val("");
+			$('#value').val("");
+			tableFunctionality();
 		});	
 };
 
 function tableFunctionality(){
 	$(".entry").on("click", function e(){
-		$("#contentWindow").html("Title : " + event.target.id + "<br>" + JSON.parse(localStorage.getItem(event.target.id))[0]);
+		var key = JSON.stringify(event.target.id)
+		key = key.split("");
+		key.shift();
+		key.pop();
+		key = key.join("");
+		$('#key').val(key);
+		$('#value').val(JSON.parse(localStorage.getItem(key))[0]);
+		$("#contentWindow").html("<div id = 'content-window-title'>Title : " + event.target.id
+			+ "</div><div id='content-window-date-updated'>" + JSON.parse(localStorage.getItem(key))[0] + "</div><div id='content-window-date-created'><br>"
+			+ JSON.parse(localStorage.getItem(event.target.id))[0]);
 	})
 }
 
